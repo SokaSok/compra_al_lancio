@@ -1,0 +1,13 @@
+html
+  head
+    title= title
+  body
+    h1= message+' '+nome
+
+script.
+  // il punto previene i warning di Jade
+  // #{} escaped values
+  // !{} unescaped values -> buono per oggetti
+  var nome = "#{nome}";
+  console.log(nome);
+  document.body.append(nome);
