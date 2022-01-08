@@ -18,12 +18,77 @@
 
     <script src="../script/genaralia.js"></script>
     <script>
+        /**
+         * {{
+         *  quotes : {
+         *      quoteCurrency : string,
+         *      market : string,
+         *      feeCurrency,
+         *      enableTrading
+         *  }[]
+         * }[]}
+        */
+        let symbols = [];
+
         const form = document.getElementById('form');
+        const res_bx = document.getElementById('risposta');
 
         window.onload = e => {
+            set_form();
+            get_symbols();
+        }
+
+        function get_symbols() {
+            let riempi_symbol = (res) => {
+                if (res.code != 200000) return console.error(res.data);
+                if (!res.data) return console.error('NO dati');
+
+                res.data.forEach(s => {
+                    let symbol = symbols.filter(sy => sy.currency == s.baseCurrency)[0];
+                    if (!symbol) {
+                        symbol = {
+                            currency : s.baseCurrency,
+                            quotes : []
+                        }
+                        symbols.push(symbol);
+                    }
+
+                    symbol.quotes.push({
+                        quoteCurrency : s.quoteCurrency,
+                        market : s.market,
+                        feeCurrency : s.feeCurrency,
+                        enableTrading : s.enableTrading
+                    })
+                    symbols.sort((a,b) => a.currency < b.currency ? -1 : 1);
+                    let cr1_s = document.getElementById('cr1');
+                    add_options(cr1_s,symbols.map(s => s.currency));
+                    cr1_s.selectedIndex = -1;
+
+                    cr1_s.addEventListener('change', e => {
+                        let cr1 = e.target.value;
+                        let values = symbols.filter(s => s.currency == cr1)[0]
+                            .quotes.map(q => q.quoteCurrency);
+                    let cr2_s = document.getElementById('cr2');
+                    cr2_s.innerHTML = '';
+                    add_options(cr2_s,values);
+                        
+                    })
+                })
+
+            }
+
+            post('/symbols',undefined,riempi_symbol,console.error);
+        }
+
+        function set_form() {
             form.appendChild(crea_select('cr1','Prima valuta'));
             form.appendChild(crea_select('cr2','Seconda valuta'));
             form.appendChild(crea_submit());
+        }
+
+        
+        function add_options(sel,values) {
+            sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join('');
         }
 
         function crea_select(id,txt) {
@@ -32,11 +97,9 @@
             label.innerText = txt;
             label.htmlFor = id;
 
-            let values = 'ADA,BTC,LTB,SOL,XLM,UTK,COTI,USDT,EUR'.split(',');
             let sel = document.createElement('select');
             sel.id = id;
             sel.name = id;
-            sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join('');
 
             span.appendChild(label);
             span.appendChild(sel);
@@ -48,8 +111,34 @@
             btn.type = 'submit';
             btn.value = 'Ok';
 
-            btn.addEventListener('submit', e => {
-                console.log(e);
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                
+                let params = {
+                    cr1 :  document.querySelector('[name="cr1"]').value,
+                    cr2 :  document.querySelector('[name="cr2"]').value
+                }
+
+                let okFun = (res) => {
+                    if (res.code != 200000) return koFun(res.data);
+                    if (!res.data) return koFun('Nessun dato trovato!');
+
+                    let keys = Object.keys(res.data);
+                    res_bx.innerHTML = '';
+
+                    for (let i = 0; i < keys.length; i++) {
+                        let k = keys[i];
+                        if (k == 'time') continue;
+
+                        let v = res.data[k] * 1;
+                        res_bx.appendChild(show_propr(k,v))
+                    }
+                }
+                let koFun = (res) => {
+                    alert(res);
+                }
+
+                post('/ticker',params,okFun,koFun)
             })
 
             return btn;

@@ -16,8 +16,14 @@ const test = async () => {
   return new Date(getTimestampRl.data).toLocaleTimeString('it-IT');
 };
 
-const get_symbol = async (symbol) => {
+const get_ticker = async (symbol) => {
   const response = await API.rest.Market.Symbols.getTicker(symbol);
+  console.log(response);
+  return response;
+}
+
+const get_symbols = async () => {
+  const response = await API.rest.Market.Symbols.getSymbolsList();
   console.log(response);
   return response;
 }
@@ -25,8 +31,9 @@ const get_symbol = async (symbol) => {
 
 module.exports = {
   test,
-  get_symbol
+  get_ticker,
+  get_symbols
 }
 
 /** Run Demo */
-//get_symbol('XLM-USDT');
+//get_symbols();

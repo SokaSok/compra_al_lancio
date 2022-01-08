@@ -20,13 +20,20 @@ app.get('/test',async (req,res) => {
  *  cr2 : string
  * }} req 
  */
-app.post('/symbol',async (req,res) => {
-    console.log(req.params);
+app.post('/ticker',async (req,res) => {
+    console.log(req.body);
+    let cr1 = req.body.cr1;
+    let cr2 = req.body.cr2;
 
-    let symbol = `${req.cr1}-${req.cr2}`; // alt dx + 096
+    let symbol = `${cr1}-${cr2}`; // alt dx + 096
         
     let kucoin = require('./kucoin');    
-    let data = await kucoin.get_symbol(symbol);    
+    let data = await kucoin.get_ticker(symbol);    
+    res.json(data);
+});
+app.post('/symbols',async (req,res) => {
+    let kucoin = require('./kucoin');    
+    let data = await kucoin.get_symbols();    
     res.json(data);
 });
 

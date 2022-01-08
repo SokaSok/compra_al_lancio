@@ -31,6 +31,28 @@
 }
 
 // DOM
+function creaElemento(tag,varie) {
+    var elem = document.createElement(tag);
+    if (varie) {
+        if (varie.classes) elem.className = varie.classes;
+        if (varie.attributes) Object.keys(varie.attributes).forEach(k=>{
+            elem.setAttribute(k,varie.attributes[k]);
+        });
+        if (varie.properties) Object.keys(varie.properties).forEach(k=>{
+            elem.style.setProperty(k,varie.properties[k]);
+        });
+        if (varie.triggers) Object.keys(varie.triggers).forEach(k=>{
+            elem.addEventListener(k,varie.triggers[k]);
+        });
+        if (varie.figli) varie.figli.forEach(el=>{
+            elem.appendChild(el);
+        });
+        else if (varie.innerText) elem.innerText = varie.innerText;
+        else if (varie.innerHTML) elem.innerHTML = varie.innerHTML;
+        else if (varie.outerHTML) elem.outerHTML = varie.outerHTML;
+    }
+    return elem;
+}
 function loading(start,parent) {
     parent = parent || document.body;
     if (start && !parent.querySelector(':scope > .loading')) {
