@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style/style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Prezzi</title>
-
-    <form id="form" action="post">
-
-    </form>
-
 </head>
 <body>
-    
+    <form 
+        action="/symbol" 
+        id="form" 
+        action="POST" 
+        enctype="multipart/form-data"></form>
+    <div id="risposta"></div>
+
+    <script src="../../script/genaralia.js"></script>
     <script>
         const form = document.getElementById('form');
 
         window.onload = e => {
             form.appendChild(crea_select('cr1','Prima valuta'));
             form.appendChild(crea_select('cr2','Seconda valuta'));
-
+            form.appendChild(crea_submit());
         }
 
         function crea_select(id,txt) {
@@ -31,11 +35,32 @@
             let values = 'ADA,BTC,LTB,SOL,XLM,UTK,COTI,USDT,EUR'.split(',');
             let sel = document.createElement('select');
             sel.id = id;
+            sel.name = id;
             sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join('');
 
             span.appendChild(label);
             span.appendChild(sel);
             return span;                
+        }
+
+        function crea_submit() {
+            let btn = document.createElement('input');
+            btn.type = 'submit';
+            btn.value = 'Ok';
+
+            btn.addEventListener('submit', e => {
+                console.log(e);
+            })
+
+            return btn;
+        }
+
+        function show_propr(k,v,decimali = 6) {
+            let span = document.createElement('span');
+            span.innerHTML = 
+                `<span class="label">${k}</span>
+                <span class="value">${v.toFixed(decimali)}</span>`;
+            return span;
         }
     </script>
 </body>

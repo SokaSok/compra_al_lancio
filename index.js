@@ -21,6 +21,8 @@ app.get('/test',async (req,res) => {
  * }} req 
  */
 app.post('/symbol',async (req,res) => {
+    console.log(req.params);
+
     let symbol = `${req.cr1}-${req.cr2}`; // alt dx + 096
         
     let kucoin = require('./kucoin');    

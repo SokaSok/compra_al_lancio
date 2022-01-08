@@ -1,0 +1,76 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+    height: 100vh;
+    padding: 15px;
+}
+
+form {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    max-width: 800px;
+    min-width: 300px;
+    width: 50%;
+
+    border: 3px solid #666;
+    border-radius: 5px;
+    background: #bbb;
+
+    padding: 10px;
+}
+
+form span {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+form :is(select,input) {
+    cursor: pointer;
+}
+form span label {
+    width: calc(100% - 70px);
+    font-size: 1.2rem;
+}
+form span select {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#risposta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    width: 90%;
+    min-width: 300px;
+    height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
+    border: 5px #333 solid;
+    padding: 10px;
+    background: rgb(243, 219, 223);
+}
