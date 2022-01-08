@@ -8,14 +8,25 @@ app.use(express.json({limit:'1mb'}));
 app.set('view engine','pug');
 
 // prova request.params
-app.get('/dati',async (req,res) => {
-    //console.log(req.params.crypto);
-    let kucoin = require('./kucoin');
-    
-    let data = await kucoin();
-    
+app.get('/test',async (req,res) => {
+    let kucoin = require('./kucoin');    
+    let data = await kucoin.test();    
     res.json(data);
-})
+});
+
+/**
+ * @param {{
+ *  cr1 : string,
+ *  cr2 : string
+ * }} req 
+ */
+app.post('/symbol',async (req,res) => {
+    let symbol = `${req.cr1}-${req.cr2}`; // alt dx + 096
+        
+    let kucoin = require('./kucoin');    
+    let data = await kucoin.get_symbol(symbol);    
+    res.json(data);
+});
 
 // prova template engines
 /**

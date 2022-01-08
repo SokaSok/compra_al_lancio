@@ -7,18 +7,26 @@ const API = require('kucoin-node-sdk');
 
 /** Init Configure */
 let cnf = require('./config');
-console.log(cnf); 
 API.init(cnf);
 
 /** API use */
-const main = async () => {
+const test = async () => {
   const getTimestampRl = await API.rest.Others.getTimestamp();
   //console.log(getTimestampRl.data);
   return new Date(getTimestampRl.data).toLocaleTimeString('it-IT');
 };
 
+const get_symbol = async (symbol) => {
+  const response = await API.rest.Market.Symbols.getTicker(symbol);
+  console.log(response);
+  return response;
+}
 
-module.exports = main;
+
+module.exports = {
+  test,
+  get_symbol
+}
 
 /** Run Demo */
-//main();
+//get_symbol('XLM-USDT');
