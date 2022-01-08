@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prezzi</title>
+
+    <form id="form" action="post">
+
+    </form>
+
+</head>
+<body>
+    
+    <script>
+        const form = document.getElementById('form');
+
+        window.onload = e => {
+            form.appendChild(crea_select('cr1','Prima valuta'));
+            form.appendChild(crea_select('cr2','Seconda valuta'));
+
+        }
+
+        function crea_select(id,txt) {
+            let span = document.createElement('span');
+            let label = document.createElement('label');
+            label.innerText = txt;
+            label.htmlFor = id;
+
+            let values = 'ADA,BTC,LTB,SOL,XLM,UTK,COTI,USDT,EUR'.split(',');
+            let sel = document.createElement('select');
+            sel.id = id;
+            sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join('');
+
+            span.appendChild(label);
+            span.appendChild(sel);
+            return span;                
+        }
+    </script>
+</body>
+</html>
