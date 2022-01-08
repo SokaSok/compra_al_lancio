@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+* {
+    outline: none;  
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    overflow: hidden ;
+}
+body {
+    /* height: calc(var('--vh',1vh) * 100); */
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    --cl-rifDad: rgb(250, 247, 217);
+    --cl-rifMista: rgb(224, 255, 240);
+    --cl-rifAssente: rgb(224, 224, 224);
+    --bg-clDAD: #D2ECC5;
+    --bg-clSel: rgb(246, 246, 191);
+    --fg-clSel: rgb(105, 3, 3);
+    --bg-clSel1: yellow;
+    --bg-cl0: white;
+    --bg-cl1: #eee;
+    --bg-cl2: #ddd;
+    --fg-cl0: #222;
+    --fg-cl1: rgb(72, 24, 128);
+    --fg-cl2: #aaa;
+    --bd-cl0: #666;
+    --bd-cl1: #ddd;
+    --bd-cl2: #ccc;
+    --sp-cl0: #4d90fe;
+    --sp-cl0a: #4f97d155;
+    --sp-cl1: #eb8220;
+    --sp-cl2: #3d9400;
+    --sp-cl3: rgb(231, 36, 36);
+    position: relative;
+    padding-top: 52px;
+    padding-bottom: 42px;
+    color: var(--fg-cl1);
+    /* overflow: hidden; */
+}
+
+/* ---------------------- Loading ------------------------ */
+body > .loading, body > .loading:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 100;
+    pointer-events: none;
+    transform-origin: top left;
+}
+body > .loading {    
+    width: 100px;
+    height: 100px;
+    background: var(--sp-cl0);
+    outline: 10px rgba(0, 0, 0, .3) solid;
+    animation: carica 1s ease-in-out infinite;        
+}
+body > .loading:before{
+    content: '';
+    width: 50%;
+    height: 50%;
+    outline: 5px rgba(0, 0, 0, .3) solid;
+    background: var(--sp-cl1);    
+    animation: carica .8s ease-in-out infinite alternate-reverse;     
+    pointer-events: none;
+ }
+ .caricamento {
+    position: relative;
+    pointer-events: none;
+ }
+ .caricamento .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    transform-origin: top left;
+    animation:  appari .5s ease-in-out forwards,
+                carica .8s ease-in-out reverse infinite;
+ }
+
+.element_synchronizing {
+    background: #eee;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+}
+@keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+}
+@keyframes carica {
+    0% {
+        transform: rotate(0deg) translate(-50%,-50%);
+    }
+    100% {
+        transform: rotate(360deg) translate(-50%,-50%);
+    }
+}
+.blackScreen {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .3);
+    z-index: 50;
+    overflow: hidden;
+}
