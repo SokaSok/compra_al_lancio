@@ -36,6 +36,11 @@ app.post('/symbols',async (req,res) => {
     let data = await kucoin.get_symbols();    
     res.json(data);
 });
+app.post('/announcement',async (req,res) => {
+    let kucoin = require('./kucoin');    
+    let data = await kucoin.get_announcement();    
+    res.json(data);
+});
 
 // prova template engines
 /**

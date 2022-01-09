@@ -1,3 +1,5 @@
+const lang = navigator.language
+
 /** @param {string} url - url dello script,
  * @param {any} parametri - coppie di chiave-valore da passare come parametri,
  * @param {function} okFun - callback function per risultato positivo,
