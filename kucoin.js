@@ -1,6 +1,7 @@
 // github https://github.com/Kucoin/kucoin-node-sdk
 // yt https://www.youtube.com/watch?v=BX432P8eq8o
 // guida https://docs.kucoin.com/#general
+// gateio-crypto-trading-bot https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins/blob/c82a94fe8ed26f88bd7c95f6aef2523034801350/src/new_listings_scraper.py#L97
 
 /** Require SDK */
 const API = require('kucoin-node-sdk');

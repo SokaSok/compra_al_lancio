@@ -124,3 +124,45 @@ body > .loading:before{
     z-index: 50;
     overflow: hidden;
 }
+
+:is(input,select,button) {
+    cursor: pointer;
+}
+
+.alt {
+    position: relative;
+}
+.alt::after {
+    content: attr(alt);
+    position: absolute;
+    background: rgba(0, 0, 0, .9);
+    opacity: 0;
+    transition: opacity .3s .2s;
+    max-width: 300%;
+    max-height: 200%;
+    padding: 10px 7px;
+    color : var(--bg-cl1);
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+.alt:is(:hover,:active,:focus,:focus-within)::after {
+    opacity: 1;
+}
+.alt.bottom::after { top : calc(100% + 5px); }
+.alt.end::after { right : -5px; }
+
+.buttons {
+    position: relative;
+    display: flex;
+    gap: 5px;
+}
+.buttons .round :is(button,input[type="button"],input[type="submit"]) {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    width: 30px;
+}

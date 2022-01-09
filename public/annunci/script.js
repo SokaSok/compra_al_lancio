@@ -43,20 +43,21 @@ function show_announcements() {
     const tm_option = {hours: '2-digit',minutes : '2-digit'};
     
     ann_bx.innerHTML = announcements.map((a,i) => 
-        `<div class="announcement ${a.active?'active':''}"
+        `<div class="announcement ${!a.active?'expired':''}" 
+            id="${a.symbol}_bx"
+            data-symbol="${a.symbol}"
             style="--delay:${i*30}ms">
             <div class="summary">
-                <h1 class="info">
-                    <div data-prop="name">
-                        <span data-prop="full">${a.full_name}</span>
-                        <span data-prop="symbol">${a.symbol}</span>
-                    </div>                
-                </h1>
                 <h2 data-prop="publishing">
                     <span data-prop="date">${a.p_time.toLocaleDateString(lang,dt_option)}</span>
                     <span data-prop="time">${a.p_time.toLocaleTimeString(lang,tm_option)}</span>
                 </h2>
+                <img src="${a.images[0]}">
             </div>
-            <img src="${a.images[0]}">
+            <div class="buttons">
+                <span class="round alt bottom end" alt="mostra grafico">
+                    <button data-prop="show_chart" class="material-icons">show_chart</button>
+                </span>
+            </div>
         </div>`).join('')
 }
