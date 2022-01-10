@@ -3,11 +3,14 @@
 // guida https://docs.kucoin.com/#general
 // gateio-crypto-trading-bot https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins/blob/c82a94fe8ed26f88bd7c95f6aef2523034801350/src/new_listings_scraper.py#L97
 
+const G = require('./generalia.js');
+
 /** Require SDK */
 const API = require('kucoin-node-sdk');
 
 /** Init Configure */
 let cnf = require('./config');
+const { copyFileSync } = require('fs');
 API.init(cnf);
 
 /** API use */
@@ -122,7 +125,38 @@ async function get_announcement() {
     let res = await makeSynchronousRequest(options);
     //console.log(res);
     return JSON.parse(res);
-  }
+}
+
+/**
+ * 
+ * @param {string} symbol - tipo "BTC-USDT"
+ * @param {Date} [start]
+ * @param {Date} [end]
+ * @returns {{
+ *  error : boolean,
+ *  message : string,
+ *  response : any?
+ * } | 
+ * {
+ *   sequence : string,
+ *   price : string,
+ *   size : string,
+ *   side : string,
+ *   time : number
+ *  }[]}
+ */
+const get_prices = async (symbol,start,end) => {
+  const response = await API.rest.Market.Histories.getMarketHistories(symbol);
+  start = start || new Date(1970,0,1);
+  end = end || new Date();
+  if (G.differenzaDate(end,start) < 0) return {error : true, message : 'END > START'};
+  if (response.code != 200000) return {error : true, response, message : 'SERVER ERROR'};
+  console.log(response.data.length)
+  console.log(new Date(response.data[0].sequence*1))
+  console.log(new Date(response.data[response.data.length-1].sequence*1))
+  let prices = response.data.filter(p => G.dataCompresa(new Date(p.sequence*1),start,end))
+  return prices;
+}
 
 module.exports = {
   test,
@@ -132,6 +166,7 @@ module.exports = {
 }
 
 /** Run Demo */
-  return;
-  get_announcement()
-  .then(r => console.log(new Date(r.items[0].first_publish_at)));
+return
+  get_prices('XLM-USDT',new Date(2022,0,6,13),new Date(2022,0,7,13))
+  //.then(r => console.log(new Date(r.reduce((acc,cur) => Math.min(acc,cur.sequence*1),Infinity))));
+  .then(r => console.log(r));
